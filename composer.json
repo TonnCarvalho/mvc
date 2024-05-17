@@ -1,0 +1,19 @@
+{
+    "name": "mvc/bng",
+    "description": "Aplicação para gestão de nomes",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Cleiton Carvalho",
+            "email": "cleiton_601@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core",
+            "App\\": ["app"],
+            "Admin\\": ["app/admin"]
+        }
+    }
+}
