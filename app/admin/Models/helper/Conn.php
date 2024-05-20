@@ -24,6 +24,11 @@ abstract class Conn
     private string $dbname = DBNAME;
     private object $connect;
 
+    /**
+     * try conect
+     * catch se der erro
+     * @return object
+     */
     protected function connectDb(): object
     {
         try {

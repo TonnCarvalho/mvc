@@ -28,10 +28,24 @@ class Login
          * 
          */
         if (!empty($this->dataForm['SendLogin'])) {
+            /**
+             * Instancia o Models\Login
+             * $validarLogin recebe o método login com os dados de dataForm
+             */
             $validarLogin = new \App\Admin\Models\Login;
             $validarLogin->login($this->dataForm);
-            
-            $this->data['form'] = $this->dataForm;
+
+            /**
+             * SE, $validarLogin->getResult existir, redirecione para dashboard.
+             * SE NÃO atribui dos dados do formulario a dataForm.
+             */
+            if($validarLogin->getResult()){
+                $urlRedirect = URLADM . "/dashboard/index";
+                header("Location: $urlRedirect");
+            } else {
+                $this->data['form'] = $this->dataForm;
+            }
+
         }
 
         $loadView = new \Core\ConfigView("admin/Views/login/login", $this->data);
