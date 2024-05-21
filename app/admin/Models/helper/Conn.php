@@ -37,7 +37,7 @@ abstract class Conn
 
             return $this->connect;
         } catch (PDOException $err) {
-            die('ERROR PAGINA NÃO ENCONTRADA. CONTATO: ' . EMAIL);
+            die('ERROR 001 PAGINA NÃO ENCONTRADA. CONTATO: ' . EMAIL);
         }
     }
 }

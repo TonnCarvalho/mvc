@@ -176,9 +176,13 @@ class ConfigController extends Config
          * Carregando controller sem precisar instanciar a classe.
          * Assim não preciso chamar o (use App\Admin\Controllers\Class)
          */
-        $this->classLoad = "\\App\\Admin\\Controllers\\" . $this->urlController;
-        $classPage = new $this->classLoad();
-        $classPage->{$this->urlMetodo}();
+        // $this->classLoad = "\\App\\Admin\\Controllers\\" . $this->urlController;
+        // $classPage = new $this->classLoad();
+        // $classPage->{$this->urlMetodo}();
+
+        $loadPgAdm = new \Core\CarregarPgAdm();
+        $loadPgAdm->loadingPage($this->urlController, $this->urlMetodo, $this->urlParametro);
+
 
     }
 }

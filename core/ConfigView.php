@@ -38,7 +38,7 @@ class ConfigView
         if (file_exists('app/' . $this->nameView . '.php')) {
             include 'app/' . $this->nameView . '.php';
         } else {
-            die('ERROR PAGINA NÃO ENCONTRADA. CONTATO: ' . EMAIL);
+            die('ERROR - 002 PAGINA NÃO ENCONTRADA. CONTATO: ' . EMAIL);
         }
         //print_r($this->nameView);
     }
