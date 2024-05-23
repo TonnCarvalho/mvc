@@ -1,6 +1,6 @@
 <?php 
 
 echo "VIEW pagina Dashboard <br>";
-echo $this->data . " " . $_SESSION['user_nome'];
+echo  $_SESSION['user_nome'];
 echo '<br>';
-echo "<a href='" . URLADM . "/login'>sair</a>";
+echo "<a href='" . URLADM . "/logout/index'>sair</a>";

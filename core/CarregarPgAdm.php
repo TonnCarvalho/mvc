@@ -4,7 +4,10 @@ namespace Core;
 
 /**
  * Verifica se existe a classe e o metodo.
+ * Pagina publica e privadas.
+ * Verifica se existe o login.
  */
+
 class CarregarPgAdm
 {
     /**
@@ -20,6 +23,8 @@ class CarregarPgAdm
     private string $classLoad;
     private string $urlSlugController;
     private string $urlSlugMetodo;
+    private array $listPgPublic;
+    private array $listPgPrivate;
 
     /**
      * Undocumented function
@@ -34,7 +39,13 @@ class CarregarPgAdm
         $this->urlController = $urlController;
         $this->urlMetodo = $urlMetodo;
         $this->urlParametro = $urlParametro;
-        $this->classLoad = "\\App\\Admin\\Controllers\\" . $this->urlController;
+
+        /**
+         * Verifica se a pagina é publica.
+         * Verifica se a pagina é privada.
+         * Verifica se existe login.
+         */
+        $this->pgPublic();
 
         /**
          * Verificar ase a classe existe
@@ -67,6 +78,57 @@ class CarregarPgAdm
         }
     }
 
+    /**
+     * Verifica se a pagina é publica
+     */
+    private function pgPublic(): void
+    {
+        /**
+         * Array da pagina publica
+         */
+        $this->listPgPublic = ["Login", "Erro", "Logout"];
+
+        /**
+         * Verifica se a pagina é publica
+         * Se existir um array em ListPgPublic no Controller, a pagina é publica
+         * SE NÃO, é privada
+         */
+        if (in_array($this->urlController, $this->listPgPublic)) {
+            $this->classLoad = "\\App\\Admin\\Controllers\\" . $this->urlController;
+        } else {
+            $this->pgPrivate();
+        }
+    }
+    /**
+     * Verifica se a pagina é privada
+     */
+    private function pgPrivate(): void
+    {
+        $this->listPgPrivate = ["Dashboard", "Users"];
+
+        if (in_array($this->urlController, $this->listPgPrivate)) {
+            $this->verificarLogin();
+        } else {
+            $_SESSION['msg'] = "<p> Erro: pagina não encontrada! </p>";
+            $urlRedirect = URLADM . '/login/index';
+            header("Location: $urlRedirect");
+        }
+    }
+    /**
+     * Verifica se esta logado.
+     *
+     * @return void
+     */
+    private function verificarLogin(): void
+    {
+        if (isset($_SESSION['user_id'])) {
+            $this->classLoad = "\\App\\Admin\\Controllers\\" . $this->urlController;
+        } else {
+            $_SESSION['msg'] = "<p> Erro: faça o login para acessar a página </p>";
+            $urlRedirect = URLADM . '/login/index';
+            header("Location: $urlRedirect");
+        }
+    }
     /**
      * Converte o valor obtido da URL "view-users" e converte no formado da classe "ViewUsers".
      * Converte tudo para minusculo
